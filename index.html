@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Kalkulator Modern</title>
 <style>
     body {
@@ -16,6 +16,12 @@
         min-height: 100vh;
         box-sizing: border-box;
         color: #333;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Hilangkan zoom double-tap di HP */
+    * {
+        touch-action: manipulation;
     }
 
     /* Peringatan */
@@ -49,7 +55,7 @@
         background: rgba(255, 255, 255, 0.9);
         padding: 15px;
         border-radius: 10px;
-        font-size: 1.8rem;
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
         color: #000;
         text-align: right;
         overflow-x: auto;
@@ -66,7 +72,7 @@
 
     button {
         padding: 15px;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         border: none;
         border-radius: 10px;
         cursor: pointer;
@@ -91,6 +97,8 @@
         max-height: 200px;
         overflow-y: auto;
         border: 1px solid #ddd;
+        width: 100%;
+        max-width: 400px;
     }
 
     .history h3 {
@@ -119,6 +127,7 @@
 
     @media (max-width: 500px) {
         .calculator { max-width: 100%; }
+        button { font-size: 1.2rem; padding: 12px; }
     }
 </style>
 </head>
@@ -235,7 +244,6 @@
         });
     }
 
-    // Support keyboard
     document.addEventListener('keydown', (e) => {
         if ((e.key >= '0' && e.key <= '9') || ['+', '-', '*', '/', '.'].includes(e.key)) {
             appendValue(e.key);
